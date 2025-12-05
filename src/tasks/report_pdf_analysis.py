@@ -1,4 +1,4 @@
-# smart_pdf.py
+# report_pdf_analysis.py
 from typing import List, Dict
 import re
 import fitz  # PyMuPDF
