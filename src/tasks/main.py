@@ -1,31 +1,31 @@
 from fastapi import FastAPI, UploadFile, File, Body
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
-from pdf_analysis import extract_pdf_pages, document_index
-from grammar import correct_grammar
+from .pdf_analysis import extract_pdf_pages, document_index
+from .grammar import correct_grammar
+from .smart_pdf import analyze_pdf, generate_report_pdf
+
 
 app = FastAPI()
+
 
 class GrammarRequest(BaseModel):
     text: str
 
+
 @app.post("/pdf/analyze")
-async def analyze_pdf(file: UploadFile = File(...)):
-    """
-    PDF 업로드 → 텍스트 추출 + 인덱스 생성
-    """
+async def analyze_pdf_endpoint(file: UploadFile = File(...)):
     pdf_bytes = await file.read()
 
     pages = extract_pdf_pages(pdf_bytes)
     full_text = "\n".join(pages)
 
-    # ✅ similarity 검색을 위해 전역 인덱스 생성
     document_index.build(full_text, source_pdf_name=file.filename)
 
-    # 아직 팀원 기능 없으니까 임시 요약/토픽/키워드
     summary = full_text[:300] + "..." if len(full_text) > 300 else full_text
     topics = ["mock-topic-1", "mock-topic-2"]
-    keywords = ["mock-keyword-1", "mock-keyword-2", "mock-keyword-3"]
+    keywords = ["mock1", "mock2", "mock3"]
 
     return {
         "file_name": file.filename,
@@ -37,28 +37,50 @@ async def analyze_pdf(file: UploadFile = File(...)):
         "preview": full_text[:1000],
     }
 
+
 @app.post("/similarity/search")
 async def similarity_search(
     query: str = Body(..., embed=True),
     top_k: int = Body(5, embed=True),
 ):
-    """
-    query를 넣으면 인덱싱된 PDF에서 비슷한 chunk top_k개 반환
-    """
     results = document_index.search(query, top_k=top_k)
-    return {
-        "query": query,
-        "top_k": top_k,
-        "results": results,
-    }
+    return {"query": query, "top_k": top_k, "results": results}
+
 
 @app.post("/grammar/correct")
 async def grammar_correct(req: GrammarRequest):
-    """
-    영어 문장 grammar correction API
-    """
     corrected = correct_grammar(req.text)
-    return {
-        "original": req.text,
-        "corrected": corrected,
-    }
+    return {"original": req.text, "corrected": corrected}
+
+@app.post(
+    "/pdf/smart",
+    responses={
+        200: {
+            "content": {
+                "application/pdf": {
+                    "schema": {
+                        "type": "string",
+                        "format": "binary",
+                    }
+                }
+            },
+            "description": "Smart PDF analysis report as PDF file",
+        }
+    },
+)
+async def smart_pdf_endpoint(file: UploadFile = File(...)):
+    pdf_bytes = await file.read()
+    pages = extract_pdf_pages(pdf_bytes)
+    full_text = "\n".join(pages)
+
+    report = analyze_pdf(full_text, file.filename)
+
+    output_path = f"report_{file.filename}.pdf"
+    generate_report_pdf(report, output_path)
+
+    return FileResponse(
+        output_path,
+        media_type="application/pdf",
+        filename=f"report_{file.filename}.pdf",
+    )
+
