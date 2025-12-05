@@ -2,10 +2,9 @@ from fastapi import FastAPI, UploadFile, File, Body
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
-from .pdf_analysis import extract_pdf_pages, document_index
+from .similarity import extract_pdf_pages, document_index
 from .grammar import correct_grammar
 from .smart_pdf import analyze_pdf, generate_report_pdf
-
 
 app = FastAPI()
 
