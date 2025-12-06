@@ -1,3 +1,4 @@
+#summarization.py
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 model_name = "facebook/bart-large-cnn"
