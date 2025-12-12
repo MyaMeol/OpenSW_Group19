@@ -1,9 +1,8 @@
-# requirements.txt (minimal for StudyTextLab CLI)
-
-transformers
 torch
-numpy
+transformers
+sentencepiece
 sentence-transformers
+numpy
 scikit-learn
 keybert
 pypdf
