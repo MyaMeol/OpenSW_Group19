@@ -1,31 +1,31 @@
+from __future__ import annotations
+from typing import Any, Dict, Optional
 from transformers import pipeline
 
-def load_model():
-    """
-    Pretrained Question Answering 모델 로드
-    """
-    model_name = "distilbert-base-uncased-distilled-squad"
-    qa = pipeline("question-answering", model=model_name)
-    return qa
+_MODEL_NAME = "distilbert-base-uncased-distilled-squad"
+_qa_pipe: Optional[Any] = None
 
-def run_qa(question, context):
-    """
-    Q&A 수행
-    """
-    qa = load_model()
-    result = qa(question=question, context=context)
-    return result
 
-if __name__ == "__main__":
-    print("=== Q&A 콘솔 프로그램 ===")
-    print("질문을 입력하면, 지문을 기반으로 답변을 생성합니다.\n")
+def load_qa_pipeline(model_name: str = _MODEL_NAME) -> Any:
+    """Q&A pipeline을 1회 로딩 후 재사용."""
+    global _qa_pipe
+    if _qa_pipe is None:
+        _qa_pipe = pipeline("question-answering", model=model_name)
+    return _qa_pipe
 
-    context = input("지문(context)을 입력하세요:\n> ")
-    question = input("\n질문(question)을 입력하세요:\n> ")
 
-    output = run_qa(question, context)
+def run_qa(qa_pipe: Any, context: str, question: str) -> Dict:
+    """main에서 호출할 표준 인터페이스."""
+    context = (context or "").strip()
+    question = (question or "").strip()
 
-    print("\n=== 결과 ===")
-    print("Answer:", output["answer"])
-    print("Score :", output["score"])
+    if not context or not question:
+        return {"error": "context/question이 비어 있습니다.", "answer": "", "score": 0.0}
 
+    result = qa_pipe(question=question, context=context)
+    return {
+        "answer": result.get("answer", ""),
+        "score": float(result.get("score", 0.0)),
+        "start": int(result.get("start", -1)),
+        "end": int(result.get("end", -1)),
+    }
