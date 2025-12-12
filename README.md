@@ -28,7 +28,7 @@ The project focuses on:
 - Grammar Correction
 - PDF Smart Analysis (Summary + Topic + Keywords)
 
-## Demo / Screenshots
+## Screenshots
 
 ### Main Menu
 ![Main Menu](docs/SW1.png)
