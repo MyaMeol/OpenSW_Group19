@@ -30,15 +30,31 @@ The project focuses on:
 
 ## Demo / Screenshots
 
-All demo images or videos should be placed inside the docs/ folder.
+### Main Menu
+![Main Menu](docs/SW1.png)
 
-Required demo files:
-- docs/demo_main_menu.png
-- docs/demo_summarization.png
-- docs/demo_qa.png
-- docs/demo_pdf_analysis.gif (or .mp4)
+### Text Input
+![Text Input1](docs/SW2.png)
+![Text Input2](docs/SW3.png)
 
-If video files are too large, screenshots may be used instead.
+### Summarization
+![Summarization](docs/SW4.png)
+
+### Question Answering
+![Question Answering](docs/SW5.png)
+
+### Sentiment
+![Sentiment](docs/SW6.png)
+
+### Delete Text
+![Delete Text](docs/SW7.png)
+
+### Delete Text
+![Delete Text1](docs/SW7.png)
+![Delete Text2](docs/SW8.png)
+
+### Quit
+![Quit](docs/SW9.png)
 
 ## Dependencies
 
