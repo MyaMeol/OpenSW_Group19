@@ -47,9 +47,6 @@ The project focuses on:
 ![Sentiment](docs/SW6.png)
 
 ### Delete Text
-![Delete Text](docs/SW7.png)
-
-### Delete Text
 ![Delete Text1](docs/SW7.png)
 ![Delete Text2](docs/SW8.png)
 
