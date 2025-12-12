@@ -111,6 +111,7 @@ Usage flow:
 StudyTextLab is organized with a modular structure to support collaborative development
 and clear separation of responsibilities.
 
+```text
 StudyTextLab/
  ├─ src/                       # Main source code
  │   ├─ main.py                # Program entry point
@@ -119,23 +120,21 @@ StudyTextLab/
  │   ├─ history.py             # Result saving and loading logic
  │   └─ tasks/                 # NLP task modules
  │        ├─ __init__.py
- │        ├─ qa.py              # Question Answering
- │        ├─ summarization.py   # Text Summarization
- │        ├─ translation.py     # Translation (EN ↔ KO)
- │        ├─ sentiment.py       # Sentiment Analysis
+ │        ├─ qa.py             # Question Answering
+ │        ├─ summarization.py  # Text Summarization
+ │        ├─ translation.py    # Translation (EN ↔ KO)
+ │        ├─ sentiment.py      # Sentiment Analysis
  │        ├─ topic_classification.py  # Topic Classification
- │        ├─ keywords.py        # Keyword Extraction
- │        ├─ similarity.py      # Text Similarity
- │        ├─ grammar.py         # Grammar Correction
- │        └─ report_pdf_analysis.py  # PDF Smart Analysis
- │
+ │        ├─ keywords.py       # Keyword Extraction
+ │        ├─ similarity.py     # Text Similarity
+ │        ├─ grammar.py        # Grammar Correction
+ │        └─ report_pdf_analysis.py   # PDF Smart Analysis
  ├─ data/                      # Sample input files (TXT, PDF)
  ├─ history/                   # Saved analysis results (JSON)
  ├─ docs/                      # Screenshots and demo media
  ├─ requirements.txt           # Python dependencies
  ├─ LICENSE                    # Project license
  └─ README.md                  # Project documentation
-
 
 ---
 
