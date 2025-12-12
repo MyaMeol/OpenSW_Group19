@@ -36,78 +36,143 @@ The project focuses on:
 
 ## Demo / Screenshots
 
-> Put demo images/videos inside the `docs/` folder and reference them here.
+All demo images or videos should be placed inside the docs/ folder.
 
-### Main Menu (CLI Interface)
-> 📌 Insert a screenshot of the main menu here
-- File: `docs/demo_main_menu.png`
+Required demo files:
+- docs/demo_main_menu.png : Main menu screen
+- docs/demo_summarization.png : Summarization result
+- docs/demo_qa.png : Question answering result
+- docs/demo_pdf_analysis.gif (or .mp4) : PDF smart analysis demo
 
-Example (uncomment after adding the file):
-<!-- ![Main Menu](docs/demo_main_menu.png) -->
-
----
-
-### Summarization Example
-> 📌 Insert a screenshot showing summarization results here
-- File: `docs/demo_summarization.png`
-
-Example (uncomment after adding the file):
-<!-- ![Summarization](docs/demo_summarization.png) -->
-
----
-
-### Question Answering Example
-> 📌 Insert a screenshot showing QA results here
-- File: `docs/demo_qa.png`
-
-Example (uncomment after adding the file):
-<!-- ![Q&A](docs/demo_qa.png) -->
-
----
-
-### PDF Smart Analysis Example
-> 📌 Insert a screenshot or short demo video (GIF/MP4) here
-- File: `docs/demo_pdf_analysis.gif` (recommended)  
-  or `docs/demo_pdf_analysis.mp4` (if allowed)
-
-Example (uncomment after adding the file):
-<!-- ![PDF Analysis](docs/demo_pdf_analysis.gif) -->
-
-> Note: If demo files are too large, screenshots may be used instead of videos.
+If video files are too large, screenshots may be used instead.
 
 ---
 
 ## Dependencies
 
+This project uses the following libraries.  
+All dependencies are installed via requirements.txt.
+
+Required environment:
 - Python 3.10 or higher
+
+Core libraries:
 - transformers
 - torch
-- sentence-transformers
-- scikit-learn
-- pypdf
+- numpy
 
-All required packages are listed in `requirements.txt`.
+Feature-related libraries:
+- sentence-transformers (text embedding and similarity)
+- scikit-learn (keyword extraction utilities)
+- keybert (keyword extraction)
+- pypdf (PDF text extraction)
 
 ---
 
 ## Installation
 
-Clone the repository and create a virtual environment:
+1. Clone the repository:
+   git clone https://github.com/your-team-name/StudyTextLab.git
+   cd StudyTextLab
 
-```bash
-git clone https://github.com/your-team-name/StudyTextLab.git
-cd StudyTextLab
+2. Create a virtual environment:
+   python -m venv venv
 
-# Create venv
-python -m venv venv
+3. Activate the virtual environment:
+   macOS / Linux:
+   source venv/bin/activate
 
-# Activate venv
-# macOS/Linux:
-source venv/bin/activate
-# Windows (PowerShell):
-venv\Scripts\Activate
-# Windows (CMD):
-venv\Scripts\activate.bat
+   Windows (PowerShell):
+   venv\Scripts\Activate
 
-# Install dependencies
-pip install -r requirements.txt
+   Windows (CMD):
+   venv\Scripts\activate.bat
+
+4. Install dependencies:
+   pip install -r requirements.txt
+
+---
+
+## How to Run
+
+Run the program from the project root directory:
+python -m src.main
+
+Usage flow:
+1. Start the program.
+2. Input text manually or load a TXT/PDF file from the data/ folder.
+3. Select an NLP task using the CLI menu.
+4. Results are displayed in the terminal and saved as JSON files in the history/ folder.
+
+---
+
+## Project Structure
+
+StudyTextLab/
+ ├─ src/
+ │   ├─ main.py
+ │   ├─ ui.py
+ │   ├─ loaders.py
+ │   ├─ history.py
+ │   └─ tasks/
+ │        ├─ __init__.py
+ │        ├─ qa.py
+ │        ├─ summarization.py
+ │        ├─ translation.py
+ │        ├─ sentiment.py
+ │        ├─ topic_classification.py
+ │        ├─ keywords.py
+ │        ├─ similarity.py
+ │        ├─ grammar.py
+ │        └─ report_pdf_analysis.py
+ ├─ data/
+ ├─ history/
+ ├─ docs/
+ ├─ requirements.txt
+ ├─ LICENSE
+ └─ README.md
+
+---
+
+## Team Members & Contributions
+
+- Member 1 (Leader): Main system, CLI UI, loaders, history, integration
+- Member 2: Summarization and Translation
+- Member 3: Question Answering and Sentiment Analysis
+- Member 4: Topic Classification and Keyword Extraction
+- Member 5: Similarity Check, Grammar Correction, PDF Smart Analysis
+
+Each member implemented their features independently and integrated them through GitHub
+pull requests.
+
+---
+
+## Collaboration Workflow
+
+- Public GitHub repository
+- Feature-based branch development
+- Pull requests required before merging into main branch
+- Commit history preserved for evaluation
+
+---
+
+## References
+
+HuggingFace Transformers:
+https://huggingface.co/docs/transformers
+
+HuggingFace Model Hub:
+https://huggingface.co/models
+
+Sentence Transformers:
+https://www.sbert.net/
+
+pypdf Documentation:
+https://pypdf.readthedocs.io/
+
+---
+
+## License
+
+This project is released under the MIT License.
+See the LICENSE file for details.
