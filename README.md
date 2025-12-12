@@ -108,29 +108,34 @@ Usage flow:
 
 ## Project Structure
 
+StudyTextLab is organized with a modular structure to support collaborative development
+and clear separation of responsibilities.
+
 StudyTextLab/
- ├─ src/
- │   ├─ main.py
- │   ├─ ui.py
- │   ├─ loaders.py
- │   ├─ history.py
- │   └─ tasks/
+ ├─ src/                       # Main source code
+ │   ├─ main.py                # Program entry point
+ │   ├─ ui.py                  # CLI user interface
+ │   ├─ loaders.py             # Text and file loaders (TXT, PDF)
+ │   ├─ history.py             # Result saving and loading logic
+ │   └─ tasks/                 # NLP task modules
  │        ├─ __init__.py
- │        ├─ qa.py
- │        ├─ summarization.py
- │        ├─ translation.py
- │        ├─ sentiment.py
- │        ├─ topic_classification.py
- │        ├─ keywords.py
- │        ├─ similarity.py
- │        ├─ grammar.py
- │        └─ report_pdf_analysis.py
- ├─ data/
- ├─ history/
- ├─ docs/
- ├─ requirements.txt
- ├─ LICENSE
- └─ README.md
+ │        ├─ qa.py              # Question Answering
+ │        ├─ summarization.py   # Text Summarization
+ │        ├─ translation.py     # Translation (EN ↔ KO)
+ │        ├─ sentiment.py       # Sentiment Analysis
+ │        ├─ topic_classification.py  # Topic Classification
+ │        ├─ keywords.py        # Keyword Extraction
+ │        ├─ similarity.py      # Text Similarity
+ │        ├─ grammar.py         # Grammar Correction
+ │        └─ report_pdf_analysis.py  # PDF Smart Analysis
+ │
+ ├─ data/                      # Sample input files (TXT, PDF)
+ ├─ history/                   # Saved analysis results (JSON)
+ ├─ docs/                      # Screenshots and demo media
+ ├─ requirements.txt           # Python dependencies
+ ├─ LICENSE                    # Project license
+ └─ README.md                  # Project documentation
+
 
 ---
 
