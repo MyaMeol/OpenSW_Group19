@@ -1,8 +1,9 @@
-torch
 transformers
-sentencepiece
-sentence-transformers
+torch
 numpy
+sentence-transformers
 scikit-learn
 keybert
 pypdf
+sentencepiece
+protobuf
