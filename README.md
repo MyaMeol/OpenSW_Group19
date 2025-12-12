@@ -76,7 +76,7 @@ All dependencies are installed via requirements.txt.
 
 ## Installation
 
-git clone https://github.com/your-team-name/StudyTextLab.git  
+git clone https://github.com/MyaMeol/OpenSW_Group19.git  
 cd StudyTextLab  
 python -m venv .venv  
 
