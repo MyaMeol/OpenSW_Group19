@@ -4,8 +4,6 @@ StudyTextLab is a HuggingFace-based AI text analysis tool designed for students.
 It provides multiple NLP functionalities such as summarization, question answering,
 translation, sentiment analysis, and document analysis through a simple CLI interface.
 
----
-
 ## Project Overview
 
 StudyTextLab was created to help students efficiently understand and analyze lecture notes,
@@ -17,8 +15,6 @@ The project focuses on:
 - Practical use of open-source NLP libraries
 - Modular design for collaborative development
 - Clear command-line interaction for real users (students)
-
----
 
 ## Features
 
@@ -32,112 +28,93 @@ The project focuses on:
 - Grammar Correction
 - PDF Smart Analysis (Summary + Topic + Keywords)
 
----
-
 ## Demo / Screenshots
 
 All demo images or videos should be placed inside the docs/ folder.
 
 Required demo files:
-- docs/demo_main_menu.png : Main menu screen
-- docs/demo_summarization.png : Summarization result
-- docs/demo_qa.png : Question answering result
-- docs/demo_pdf_analysis.gif (or .mp4) : PDF smart analysis demo
+- docs/demo_main_menu.png
+- docs/demo_summarization.png
+- docs/demo_qa.png
+- docs/demo_pdf_analysis.gif (or .mp4)
 
 If video files are too large, screenshots may be used instead.
 
----
-
 ## Dependencies
 
-This project uses the following libraries.  
-All dependencies are installed via requirements.txt.
-
 Required environment:
-- Python 3.10 or higher
+- Python 3.10 or higher (Python 3.11 recommended)
 
-Core libraries:
+Libraries:
 - transformers
 - torch
 - numpy
+- sentence-transformers
+- scikit-learn
+- keybert
+- pypdf
+- sentencepiece
+- protobuf
 
-Feature-related libraries:
-- sentence-transformers (text embedding and similarity)
-- scikit-learn (keyword extraction utilities)
-- keybert (keyword extraction)
-- pypdf (PDF text extraction)
-
----
+All dependencies are installed via requirements.txt.
 
 ## Installation
 
-1. Clone the repository:
-   git clone https://github.com/your-team-name/StudyTextLab.git
-   cd StudyTextLab
+git clone https://github.com/your-team-name/StudyTextLab.git  
+cd StudyTextLab  
+python -m venv .venv  
 
-2. Create a virtual environment:
-   python -m venv venv
+Windows (PowerShell):  
+.venv\Scripts\Activate  
 
-3. Activate the virtual environment:
-   macOS / Linux:
-   source venv/bin/activate
+macOS / Linux:  
+source .venv/bin/activate  
 
-   Windows (PowerShell):
-   venv\Scripts\Activate
+pip install --upgrade pip setuptools wheel  
+pip install -r requirements.txt  
 
-   Windows (CMD):
-   venv\Scripts\activate.bat
+## Windows HuggingFace Cache Path
 
-4. Install dependencies:
-   pip install -r requirements.txt
-
----
+$env:HF_HOME="F:\hf_cache"  
+$env:TRANSFORMERS_CACHE="F:\hf_cache\transformers"  
 
 ## How to Run
 
-Run the program from the project root directory:
-python -m src.main
+python main.py
 
-Usage flow:
+## Usage Flow
+
 1. Start the program.
 2. Input text manually or load a TXT/PDF file from the data/ folder.
 3. Select an NLP task using the CLI menu.
 4. Results are displayed in the terminal and saved as JSON files in the history/ folder.
 
----
-
 ## Project Structure
 
-StudyTextLab is organized with a modular structure to support collaborative development
-and clear separation of responsibilities.
-
 ```text
-StudyTextLab/
- ├─ src/                       # Main source code
- │   ├─ main.py                # Program entry point
- │   ├─ ui.py                  # CLI user interface
- │   ├─ loaders.py             # Text and file loaders (TXT, PDF)
- │   ├─ history.py             # Result saving and loading logic
- │   └─ tasks/                 # NLP task modules
- │        ├─ __init__.py
- │        ├─ qa.py             # Question Answering
- │        ├─ summarization.py  # Text Summarization
- │        ├─ translation.py    # Translation (EN ↔ KO)
- │        ├─ sentiment.py      # Sentiment Analysis
- │        ├─ topic_classification.py  # Topic Classification
- │        ├─ keywords.py       # Keyword Extraction
- │        ├─ similarity.py     # Text Similarity
- │        ├─ grammar.py        # Grammar Correction
- │        └─ report_pdf_analysis.py   # PDF Smart Analysis
- ├─ data/                      # Sample input files (TXT, PDF)
- ├─ history/                   # Saved analysis results (JSON)
- ├─ docs/                      # Screenshots and demo media
- ├─ requirements.txt           # Python dependencies
- ├─ LICENSE                    # Project license
- └─ README.md                  # Project documentation
+StudyTextLab/  
+ ├─ tasks/  
+ │   ├─ __init__.py  
+ │   ├─ qa.py  
+ │   ├─ summarization.py  
+ │   ├─ translation.py  
+ │   ├─ sentiment.py  
+ │   ├─ topic_classification.py  
+ │   ├─ keywords.py  
+ │   ├─ similarity.py  
+ │   ├─ grammar.py  
+ │   └─ report_pdf_analysis.py  
+ ├─ data/  
+ ├─ history/  
+ ├─ docs/  
+ ├─ main.py  
+ ├─ ui.py  
+ ├─ loaders.py  
+ ├─ history.py  
+ ├─ requirements.txt  
+ ├─ LICENSE  
+ └─ README.md  
 ```
-
----
 
 ## Team Members & Contributions
 
@@ -147,11 +124,6 @@ StudyTextLab/
 - Member 4: Topic Classification and Keyword Extraction
 - Member 5: Similarity Check, Grammar Correction, PDF Smart Analysis
 
-Each member implemented their features independently and integrated them through GitHub
-pull requests.
-
----
-
 ## Collaboration Workflow
 
 - Public GitHub repository
@@ -159,23 +131,12 @@ pull requests.
 - Pull requests required before merging into main branch
 - Commit history preserved for evaluation
 
----
-
 ## References
 
-HuggingFace Transformers:
-https://huggingface.co/docs/transformers
-
-HuggingFace Model Hub:
-https://huggingface.co/models
-
-Sentence Transformers:
-https://www.sbert.net/
-
-pypdf Documentation:
-https://pypdf.readthedocs.io/
-
----
+HuggingFace Transformers: https://huggingface.co/docs/transformers  
+HuggingFace Model Hub: https://huggingface.co/models  
+Sentence Transformers: https://www.sbert.net/  
+pypdf Documentation: https://pypdf.readthedocs.io/  
 
 ## License
 
