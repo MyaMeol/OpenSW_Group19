@@ -1,7 +1,5 @@
 # StudyTextLab - Main Entry
 
-from pathlib import Path
-
 from ui import (
     print_header,
     print_main_menu,
@@ -25,7 +23,7 @@ from history import (
     load_history_file,
 )
 
-# ---- 팀원들이 구현할 Task 모듈 ----
+# ---- 팀원들이 구현한 Task 모듈 ----
 from tasks import qa
 from tasks import summarization
 from tasks import translation
@@ -37,11 +35,10 @@ from tasks import grammar
 from tasks import report_pdf_analysis
 
 
-# 프로젝트 루트 경로 (history/data 폴더 찾을 때 사용)
-ROOT_DIR = Path(__file__).resolve().parent.parent
+def pause():
+    input("\n(스크린샷 촬영 후 Enter를 누르면 메뉴로 돌아갑니다...) ")
 
 
-# 파이프라인(모델) 미리 로딩
 def init_pipelines():
     """
     프로그램 시작 시 한 번만 호출해서
@@ -50,8 +47,6 @@ def init_pipelines():
     print_info("Loading NLP pipelines... (this may take a while on first run)")
 
     pipelines = {}
-
-    # 각 모듈에 미리 약속한 로더 함수 이름대로 호출
     pipelines["qa"] = qa.load_qa_pipeline()
     pipelines["summarizer"] = summarization.load_summarizer()
     pipelines["translator"] = translation.load_translator()
@@ -61,15 +56,15 @@ def init_pipelines():
     pipelines["grammar_model"] = grammar.load_grammar_model()
 
     print_info("All pipelines loaded successfully.\n")
+    pause()
     return pipelines
 
 
-# 메인 루프
 def main():
     pipelines = init_pipelines()
 
-    current_text: str = ""     # 현재 선택된/입력된 텍스트
-    second_text: str = ""      # 유사도 비교용 텍스트 (필요 시 사용)
+    current_text: str = ""
+    second_text: str = ""
 
     while True:
         print_header("StudyTextLab - AI Text Lab for Students")
@@ -83,25 +78,28 @@ def main():
         # ==========================
         if cmd == "q":
             print_info("프로그램을 종료합니다. 이용해 주셔서 감사합니다!")
+            pause()
             break
 
         elif cmd == "t":
-            # 사용자가 직접 여러 줄 입력
             current_text = load_text_from_user()
             print_info("현재 텍스트가 업데이트되었습니다.")
+            pause()
 
         elif cmd == "f":
-            # data/ 폴더에서 txt 파일 선택 후 로드
             path = select_txt_file_interactive()
             if path is None:
                 print_error("선택된 파일이 없습니다.")
+                pause()
                 continue
             current_text = load_text_from_txt_file(path)
             print_info(f"텍스트 파일을 로드했습니다: {path.name}")
+            pause()
 
         elif cmd == "c":
             current_text = ""
             print_info("현재 텍스트를 초기화했습니다.")
+            pause()
 
         # ==========================
         # 히스토리 관련 메뉴
@@ -110,6 +108,7 @@ def main():
             history_files = list_history_files()
             if not history_files:
                 print_error("저장된 히스토리가 없습니다.")
+                pause()
                 continue
             print_history_list(history_files)
             choice = input("열어볼 히스토리 번호를 입력하세요 (엔터: 취소): ").strip()
@@ -121,10 +120,12 @@ def main():
                     raise ValueError
             except ValueError:
                 print_error("잘못된 번호입니다.")
+                pause()
                 continue
 
             data = load_history_file(history_files[idx])
             print_result_block("History Detail", data)
+            pause()
 
         # ==========================
         # Q&A
@@ -132,11 +133,13 @@ def main():
         elif cmd == "1":
             if not current_text.strip():
                 print_error("먼저 텍스트를 입력하거나 파일을 로드하세요. (T 또는 F)")
+                pause()
                 continue
             question = prompt_question()
             result = qa.run_qa(pipelines["qa"], current_text, question)
             print_result_block("Q&A Result", result)
             save_history("qa", {"context": current_text, "question": question}, result)
+            pause()
 
         # ==========================
         # Summarization
@@ -144,15 +147,17 @@ def main():
         elif cmd == "2":
             if not current_text.strip():
                 print_error("먼저 텍스트를 입력하거나 파일을 로드하세요.")
+                pause()
                 continue
             summary = summarization.run_summarization(
                 pipelines["summarizer"],
                 current_text,
-                max_len=128,
-                min_len=32,
+                max_len=60,
+                min_len=20,
             )
             print_result_block("Summarization Result", {"summary": summary})
             save_history("summarization", {"text": current_text}, {"summary": summary})
+            pause()
 
         # ==========================
         # Translation
@@ -160,10 +165,12 @@ def main():
         elif cmd == "3":
             if not current_text.strip():
                 print_error("먼저 텍스트를 입력하거나 파일을 로드하세요.")
+                pause()
                 continue
             translated = translation.run_translation(pipelines["translator"], current_text)
             print_result_block("Translation Result", {"translated": translated})
             save_history("translation", {"text": current_text}, {"translated": translated})
+            pause()
 
         # ==========================
         # Sentiment
@@ -171,10 +178,12 @@ def main():
         elif cmd == "4":
             if not current_text.strip():
                 print_error("먼저 텍스트를 입력하거나 파일을 로드하세요.")
+                pause()
                 continue
             result = sentiment.run_sentiment(pipelines["sentiment"], current_text)
             print_result_block("Sentiment Result", {"sentiment": result})
             save_history("sentiment", {"text": current_text}, {"result": result})
+            pause()
 
         # ==========================
         # Topic Classification
@@ -182,6 +191,7 @@ def main():
         elif cmd == "5":
             if not current_text.strip():
                 print_error("먼저 텍스트를 입력하거나 파일을 로드하세요.")
+                pause()
                 continue
             result = topic_classification.run_topic_classification(
                 pipelines["topic_classifier"],
@@ -189,6 +199,7 @@ def main():
             )
             print_result_block("Topic Classification Result", result)
             save_history("topic_classification", {"text": current_text}, result)
+            pause()
 
         # ==========================
         # Keyword Extraction
@@ -196,10 +207,12 @@ def main():
         elif cmd == "6":
             if not current_text.strip():
                 print_error("먼저 텍스트를 입력하거나 파일을 로드하세요.")
+                pause()
                 continue
             result = keywords.extract_keywords(current_text, top_k=10)
             print_result_block("Keyword Extraction Result", {"keywords": result})
             save_history("keywords", {"text": current_text}, {"keywords": result})
+            pause()
 
         # ==========================
         # Similarity Check
@@ -207,6 +220,7 @@ def main():
         elif cmd == "7":
             if not current_text.strip():
                 print_error("먼저 기준 텍스트를 입력하거나 파일을 로드하세요. (T 또는 F)")
+                pause()
                 continue
             print_info("비교할 두 번째 텍스트를 입력합니다.")
             second_text = load_text_from_user()
@@ -221,6 +235,7 @@ def main():
                 {"text_a": current_text, "text_b": second_text},
                 sim_result,
             )
+            pause()
 
         # ==========================
         # Grammar Correction
@@ -228,6 +243,7 @@ def main():
         elif cmd == "8":
             if not current_text.strip():
                 print_error("먼저 텍스트를 입력하거나 파일을 로드하세요.")
+                pause()
                 continue
             corrected = grammar.run_grammar_correction(
                 pipelines["grammar_model"],
@@ -239,6 +255,7 @@ def main():
                 {"original": current_text},
                 corrected,
             )
+            pause()
 
         # ==========================
         # PDF Smart Analysis
@@ -247,6 +264,7 @@ def main():
             pdf_path = select_pdf_file_interactive()
             if pdf_path is None:
                 print_error("선택된 PDF 파일이 없습니다.")
+                pause()
                 continue
 
             report = report_pdf_analysis.analyze_pdf(
@@ -257,9 +275,11 @@ def main():
             )
             print_result_block("PDF Smart Analysis Report", report)
             save_history("pdf_analysis", {"pdf_path": str(pdf_path)}, report)
+            pause()
 
         else:
             print_error("알 수 없는 명령입니다. 다시 입력해 주세요.")
+            pause()
 
 
 if __name__ == "__main__":
